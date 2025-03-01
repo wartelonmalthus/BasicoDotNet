@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591;CA1416</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="FluentValidation" Version="11.11.0" />
+    <PackageReference Include="MediatR" Version="12.4.1" />
+    <PackageReference Include="System.Linq.Async" Version="6.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\3-Domain\Bernhoeft.GRT.Teste.Domain\Bernhoeft.GRT.Teste.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Bernhoeft.GRT.Core">
+      <HintPath>..\..\Libs\Bernhoeft.GRT.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Bernhoeft.GRT.Core.EntityFramework">
+      <HintPath>..\..\Libs\Bernhoeft.GRT.Core.EntityFramework.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

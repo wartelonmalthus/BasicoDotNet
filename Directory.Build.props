@@ -1,0 +1,8 @@
+﻿<Project>
+  <PropertyGroup>
+    <OutputPath>$(SolutionDir)Build\$(MSBuildProjectName)\$(Configuration)\bin</OutputPath>
+    <BaseIntermediateOutputPath>$(SolutionDir)Build\$(MSBuildProjectName)\$(Configuration)\obj</BaseIntermediateOutputPath>
+    <ErrorOnDuplicatePublishOutputFiles>false</ErrorOnDuplicatePublishOutputFiles>
+    <NoWarn>$(NoWarn);NU1701;MSB4011</NoWarn>
+  </PropertyGroup>
+</Project>

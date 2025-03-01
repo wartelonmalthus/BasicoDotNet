@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.1.66" />
+    <PackageReference Include="EFCore.BulkExtensions.Core" Version="9.0.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="9.0.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.2" />
+    <PackageReference Include="Polly" Version="8.5.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\3-Domain\Bernhoeft.GRT.Teste.Domain\Bernhoeft.GRT.Teste.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Bernhoeft.GRT.Core">
+      <HintPath>..\..\Libs\Bernhoeft.GRT.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Bernhoeft.GRT.Core.EntityFramework">
+      <HintPath>..\..\Libs\Bernhoeft.GRT.Core.EntityFramework.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
