@@ -13,7 +13,7 @@ public class GetAvisoByIdHandler(IAvisoRepository avisoRepository) : IRequestHan
 
     public async Task<IOperationResult<GetAvisoByIdResponse>> Handle(GetAvisoByIdRequest request, CancellationToken cancellationToken)
     {
-        var aviso = await _avisoRepository.GetByIdAsync(request.id, cancellationToken);
+        var aviso = await _avisoRepository.GetByIdAsync(request.Id, cancellationToken);
 
         if (aviso is null)
             return OperationResult<GetAvisoByIdResponse>.ReturnNotFound()

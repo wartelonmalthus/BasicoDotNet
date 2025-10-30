@@ -13,7 +13,6 @@ public class UpdateAvisoHandler(IAvisoRepository avisoRepository) : IRequestHand
 
     public async Task<IOperationResult<UpdateAvisoResponse>> Handle(UpdateAvisoRequest request, CancellationToken cancellationToken)
     {
-        var messages = new List<string>();
 
         var aviso = await _avisoRepository.GetByIdAsync(request.Id, cancellationToken);
 
@@ -21,12 +20,8 @@ public class UpdateAvisoHandler(IAvisoRepository avisoRepository) : IRequestHand
             return OperationResult<UpdateAvisoResponse>.ReturnNotFound()
                 .AddMessage("Aviso não encontrado.");
 
-        if (messages.Count > 0)
-            return OperationResult<UpdateAvisoResponse>.ReturnBadRequest().AddMessage(messages);
-
         aviso.Atualizar(request.Titulo, request.Mensagem);
-       
-       
+      
          _avisoRepository.Update(aviso);
         await _avisoRepository.SaveChangesAsync(cancellationToken);
 

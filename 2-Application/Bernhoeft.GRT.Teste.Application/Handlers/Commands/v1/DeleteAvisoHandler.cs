@@ -1,5 +1,4 @@
 ﻿using Bernhoeft.GRT.ContractWeb.Domain.SqlServer.ContractStore.Interfaces.Repositories;
-using Bernhoeft.GRT.Core.Enums;
 using Bernhoeft.GRT.Core.Interfaces.Results;
 using Bernhoeft.GRT.Core.Models;
 using Bernhoeft.GRT.Teste.Application.Requests.Commands.v1;
@@ -25,9 +24,6 @@ public class DeleteAvisoHandler(IAvisoRepository avisoRepository) : IRequestHand
          _avisoRepository.Update(aviso);
         await _avisoRepository.SaveChangesAsync(cancellationToken);
 
-        return OperationResult<DeleteAvisoResponse>.ReturnOk(new DeleteAvisoResponse
-        {
-            Id = aviso.Id
-        });
+        return OperationResult<DeleteAvisoResponse>.ReturnOk(new DeleteAvisoResponse{ Id = aviso.Id });
     }
 }

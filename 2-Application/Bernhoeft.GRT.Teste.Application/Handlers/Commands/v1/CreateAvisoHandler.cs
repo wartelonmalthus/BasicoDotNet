@@ -14,15 +14,6 @@ public class CreateAvisoHandler(IAvisoRepository avisoRepository) : IRequestHand
 
     public async Task<IOperationResult<CreateAvisoResponse>> Handle(CreateAvisoRequest request, CancellationToken cancellationToken)
     {
-        var messages = new List<string>();
-        if (string.IsNullOrWhiteSpace(request.Titulo))
-            messages.Add("Titulo é obrigatório.");
-        if (string.IsNullOrWhiteSpace(request.Mensagem))
-            messages.Add("Mensagem é obrigatória.");
-
-        if (messages.Count > 0)
-            return OperationResult<CreateAvisoResponse>.ReturnBadRequest().AddMessage(messages);
-
         var entity = new AvisoEntity(request.Titulo.Trim(), request.Mensagem.Trim());
 
         await _avisoRepository.AddAsync(entity, cancellationToken);
