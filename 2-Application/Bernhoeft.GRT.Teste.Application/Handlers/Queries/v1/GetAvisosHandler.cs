@@ -1,4 +1,5 @@
-﻿using Bernhoeft.GRT.ContractWeb.Domain.SqlServer.ContractStore.Interfaces.Repositories;
+﻿using Bernhoeft.GRT.ContractWeb.Domain.SqlServer.ContractStore.Entities;
+using Bernhoeft.GRT.ContractWeb.Domain.SqlServer.ContractStore.Interfaces.Repositories;
 using Bernhoeft.GRT.Core.EntityFramework.Domain.Interfaces;
 using Bernhoeft.GRT.Core.Enums;
 using Bernhoeft.GRT.Core.Extensions;
@@ -22,7 +23,7 @@ namespace Bernhoeft.GRT.Teste.Application.Handlers.Queries.v1
 
         public async Task<IOperationResult<IEnumerable<GetAvisosResponse>>> Handle(GetAvisosRequest request, CancellationToken cancellationToken)
         {
-            var result = await _avisoRepository.ObterTodosAvisosAsync(TrackingBehavior.NoTracking);
+            List<AvisoEntity> result = await _avisoRepository.ObterTodosAvisosAsync(TrackingBehavior.NoTracking);
             if (!result.HaveAny())
                 return OperationResult<IEnumerable<GetAvisosResponse>>.ReturnNoContent();
 

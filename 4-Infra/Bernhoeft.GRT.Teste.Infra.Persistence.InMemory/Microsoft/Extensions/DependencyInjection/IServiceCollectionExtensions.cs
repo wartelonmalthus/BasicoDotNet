@@ -21,16 +21,10 @@ namespace Microsoft.Extensions.DependencyInjection
                            var dbSet = context.Set<AvisoEntity>();
                            if (!await dbSet.AnyAsync(cancellationToken))
                            {
-                               dbSet.Add(new()
-                               {
-                                   Titulo = "Titulo 1",
-                                   Mensagem = "Mensagem 1",
-                               });
-                               dbSet.Add(new()
-                               {
-                                   Titulo = "Titulo 2",
-                                   Mensagem = "Mensagem 2",
-                               });
+                               dbSet.Add(new AvisoEntity("Titulo 1", "Mensagem 1"));
+                               dbSet.Add(new AvisoEntity("Titulo 2", "Mensagem 2"));
+                               dbSet.Add(new AvisoEntity("Titulo 3", "Mensagem 3"));
+
                                await context.SaveChangesAsync(cancellationToken);
                            }
                        });

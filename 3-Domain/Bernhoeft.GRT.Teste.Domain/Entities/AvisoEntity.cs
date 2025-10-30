@@ -1,10 +1,17 @@
-﻿namespace Bernhoeft.GRT.ContractWeb.Domain.SqlServer.ContractStore.Entities
+﻿using Bernhoeft.GRT.Teste.Domain.Entities;
+
+namespace Bernhoeft.GRT.ContractWeb.Domain.SqlServer.ContractStore.Entities;
+
+public partial class AvisoEntity(string titulo, string mensagem) : BaseEntity
 {
-    public partial class AvisoEntity
+    public string Titulo { get; private set; } = titulo;
+    public string Mensagem { get; private set; } = mensagem;
+
+    public void Atualizar(string? titulo, string? mensagem)
     {
-        public int Id { get; private set; }
-        public bool Ativo { get; set; } = true;
-        public string Titulo { get; set; }
-        public string Mensagem { get; set; }
+        if (titulo is not null)
+            Titulo = titulo;
+        if (mensagem is not null)
+            Mensagem = mensagem;
     }
 }
