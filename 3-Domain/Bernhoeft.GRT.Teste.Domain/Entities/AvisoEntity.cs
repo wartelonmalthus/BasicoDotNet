@@ -13,5 +13,8 @@ public partial class AvisoEntity(string titulo, string mensagem) : BaseEntity
             Titulo = titulo;
         if (mensagem is not null)
             Mensagem = mensagem;
+
+        AtualizarDataAlteracao();
+
     }
 }

@@ -1,33 +1,40 @@
 ﻿using Bernhoeft.GRT.ContractWeb.Domain.SqlServer.ContractStore.Entities;
 using Bernhoeft.GRT.ContractWeb.Domain.SqlServer.ContractStore.Interfaces.Repositories;
-using Bernhoeft.GRT.Core.EntityFramework.Domain.Interfaces;
-using Bernhoeft.GRT.Core.Enums;
-using Bernhoeft.GRT.Core.Extensions;
 using Bernhoeft.GRT.Core.Interfaces.Results;
 using Bernhoeft.GRT.Core.Models;
 using Bernhoeft.GRT.Teste.Application.Requests.Queries.v1;
 using Bernhoeft.GRT.Teste.Application.Responses.Queries.v1;
+using Bernhoeft.GRT.Teste.Domain.Models.Aviso;
+using Bernhoeft.GRT.Teste.Domain.Models.Common;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Bernhoeft.GRT.Teste.Application.Handlers.Queries.v1
 {
-    public class GetAvisosHandler : IRequestHandler<GetAvisosRequest, IOperationResult<IEnumerable<GetAvisosResponse>>>
+    public class GetAvisosHandler(IServiceProvider serviceProvider) : IRequestHandler<GetAvisosRequest, IOperationResult<PagedResult<GetAvisosResponse>>>
     {
-        private readonly IServiceProvider _serviceProvider;
+        private readonly IServiceProvider _serviceProvider = serviceProvider;
 
-        private IContext _context => _serviceProvider.GetRequiredService<IContext>();
         private IAvisoRepository _avisoRepository => _serviceProvider.GetRequiredService<IAvisoRepository>();
 
-        public GetAvisosHandler(IServiceProvider serviceProvider) => _serviceProvider = serviceProvider;
-
-        public async Task<IOperationResult<IEnumerable<GetAvisosResponse>>> Handle(GetAvisosRequest request, CancellationToken cancellationToken)
+        public async Task<IOperationResult<PagedResult<GetAvisosResponse>>> Handle(GetAvisosRequest request, CancellationToken cancellationToken)
         {
-            List<AvisoEntity> result = await _avisoRepository.ObterTodosAvisosAsync(TrackingBehavior.NoTracking);
-            if (!result.HaveAny())
-                return OperationResult<IEnumerable<GetAvisosResponse>>.ReturnNoContent();
+            PagedResult<AvisoEntity> result = await _avisoRepository.ObterAvisosComFiltrosAsync((AvisoFilter)request, cancellationToken);
 
-            return OperationResult<IEnumerable<GetAvisosResponse>>.ReturnOk(result.Select(x => (GetAvisosResponse)x));
+            if (result.TotalRecords == 0)
+                return OperationResult<PagedResult<GetAvisosResponse>>.ReturnNoContent();
+
+            var pagedResponse = new PagedResult<GetAvisosResponse>
+            {
+                PageNumber = result.PageNumber,
+                PageSize = result.PageSize,
+                TotalRecords = result.TotalRecords,
+                TotalPages = result.TotalPages,
+                Data = result.Data.Select(x => (GetAvisosResponse)x).ToList()
+            };
+
+            return OperationResult<PagedResult<GetAvisosResponse>>.ReturnOk(pagedResponse);
         }
     }
+    
 }

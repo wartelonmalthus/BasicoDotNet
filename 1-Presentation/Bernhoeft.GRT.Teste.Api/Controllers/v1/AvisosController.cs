@@ -27,8 +27,8 @@ namespace Bernhoeft.GRT.Teste.Api.Controllers.v1
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDocumentationRestResult<IEnumerable<GetAvisosResponse>>))]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
-        public async Task<object> GetAvisos(CancellationToken cancellationToken)
-            => await Mediator.Send(new GetAvisosRequest(), cancellationToken);
+        public async Task<object> GetAvisos([FromQuery] GetAvisosRequest request, CancellationToken cancellationToken)
+            => await Mediator.Send(request, cancellationToken);
 
         /// <summary>
         /// Retorna um Aviso por ID.
@@ -62,5 +62,39 @@ namespace Bernhoeft.GRT.Teste.Api.Controllers.v1
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<object> PostAviso([FromBody] CreateAvisoRequest request, CancellationToken cancellationToken)
             => await Mediator.Send(request, cancellationToken);
+
+        /// <summary>
+        /// Atualiza um Aviso existente.
+        /// </summary>
+        /// <param name="id">ID do aviso.</param>
+        /// <param name="request">Dados atualizados do aviso.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>Aviso atualizado.</returns>
+        /// <response code="200">Sucesso.</response>
+        /// <response code="400">Dados inválidos.</response>
+        /// <response code="404">Aviso não encontrado.</response>
+        [HttpPut("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDocumentationRestResult<UpdateAvisoResponse>))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<object> PutAviso([FromRoute] int id, [FromBody] UpdateAvisoRequest request, CancellationToken cancellationToken)
+        {
+            request.Id = id;
+            return await Mediator.Send(request, cancellationToken);
+        }
+
+        /// <summary>
+        /// Exclui (desativa) um Aviso.
+        /// </summary>
+        /// <param name="id">ID do aviso.</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns>Confirmação de exclusão.</returns>
+        /// <response code="200">Aviso excluído com sucesso.</response>
+        /// <response code="404">Aviso não encontrado.</response>
+        [HttpDelete("{id:int}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IDocumentationRestResult<DeleteAvisoResponse>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<object> DeleteAviso([FromRoute] int id, CancellationToken cancellationToken)
+            => await Mediator.Send(new DeleteAvisoRequest { Id = id }, cancellationToken);
     }
 }
